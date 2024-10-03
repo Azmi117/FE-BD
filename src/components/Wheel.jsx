@@ -23,7 +23,7 @@ export default () => {
 
   return (
     <>
-      <div>
+      <div className='mt-40'>
         <Wheel
           mustStartSpinning={mustSpin}
           prizeNumber={prizeNumber}
@@ -33,14 +33,16 @@ export default () => {
             setMessage(`Selamat kamu mendapat hadiah nomor ${data[prizeNumber].option}!`);
           }}
         />
-        <div className='flex justify-center'>
-          <p style={{ minHeight: '24px' }}> {/* Atur tinggi tetap agar tidak ada pergeseran */}
-            {message}
-          </p>
+        <div className='flex flex-col mt-3'>
+          <div className='flex justify-center'>
+            <button onClick={handleSpinClick} className='ms-2 bg-red-500 h-10 px-3 rounded-md text-white'>SPIN</button>
+          </div>
+          <div className='mt-3 flex justify-center'>
+            <p style={{ minHeight: '24px' }}>
+              {message}
+            </p>
+          </div>
         </div>
-      </div>
-      <div className='flex items-center'>
-        <button onClick={handleSpinClick} className='ms-2 bg-red-500 h-10 px-3 rounded-md text-white'>SPIN</button>
       </div>
     </>
   )
