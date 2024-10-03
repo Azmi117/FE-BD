@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Wheel from "../components/Wheel";
 
 const Home = () => {
+    
     return(
         <>
             <Navbar/>

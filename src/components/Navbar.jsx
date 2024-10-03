@@ -1,13 +1,33 @@
-import React, { useState } from "react";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import React, { useEffect, useState } from "react";
 import Box from "./Box";
+import {jwtDecode} from "jwt-decode";
+import { getMe } from "../services/userService";
 
 const Navbar = ({children}) => {
     const [Boxy, setBoxy] = useState(false);
+    const [userPhoto, setUserPhoto] = useState(null);
 
     const handleBox = () => {
         setBoxy(!Boxy);
     }
+
+    useEffect(() =>{
+        const fetchUserData = async () => {
+            try{
+                const token = localStorage.getItem('token');
+                if(token) {
+                    const decodeToken = jwtDecode(token);
+                    const userId = decodeToken.id;
+                    const user = await getMe(userId);
+                    setUserPhoto(user.photo);
+                }
+            }catch(error){
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     return(
         <>
@@ -17,7 +37,7 @@ const Navbar = ({children}) => {
                 </div>
                 <div className="me-7">
                     <button onClick={handleBox}>
-                        <img src="https://images.pexels.com/photos/27782182/pexels-photo-27782182/free-photo-of-a-woman-in-a-white-shirt-and-hat-is-standing-outside.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className="w-8 h-8 rounded-full"/>
+                        <img src={userPhoto} alt="" className="w-8 h-8 rounded-full"/>
                     </button>
                     {Boxy && (
                         <Box/>
